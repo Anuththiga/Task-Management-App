@@ -1,10 +1,16 @@
-import React from 'react'
-import '../styles/header.scss'
+import React, { useState } from 'react'
+import AddTaskModal from './AddTaskModal'
+import { Button } from 'react-bootstrap';
 
 function Header() {
+  const [openModal,setOpenModal] = useState(false);
+
   return (
     <div>
-      <input type='button' className='add-task' value="Add Task"/>
+      <div className='d-grid'>
+        <Button variant='primary' size='lg' onClick={()=>{setOpenModal(true)}}>Add Task</Button>
+      </div>
+      {openModal && <AddTaskModal closeModal={setOpenModal} />}
     </div>
   )
 }
