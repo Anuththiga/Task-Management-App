@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -6,24 +6,65 @@ import { InputGroup } from 'react-bootstrap';
 
 
 function AddTaskModal({closeModal}) {
+  const [tasks,setTasks] = useState([]);
+  
+  useEffect(()=>{
+    setTasksToLocalStorage(tasks)
+  },[tasks])
+  
+
+  const toggleModal = () => {
+    closeModal(false);
+};
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    
+    let newTask = {
+      title: e.target.title.value,
+      description: e.target.description.value
+    };
+
+    
+    // let updatedTask = [...tasks];
+    // updatedTask.push(newTask)
+    // setTasks(updatedTask)
+    // setTasksToLocalStorage(tasks)
+
+    let updatedTask = [...tasks, newTask];
+    setTasks(updatedTask)   
+        
+    // toggleModal ();
+    
+  }
+
+  console.log(tasks)
+
+  function setTasksToLocalStorage(tasks) {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
+  
+ 
+ 
   return (
     <Modal show={true} >
         <Modal.Header onClick={()=>closeModal(false)}  closeButton>
           <Modal.Title>New Task</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit} id="taskForm">
             <Form.Group className="mb-3" >
               <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Title"
+                name="title"
+                placeholder=" Enter Title"
                 autoFocus
               />
             </Form.Group>
             <Form.Group className="mb-3" >
               <Form.Label>Description</Form.Label>
-              <Form.Control as="textarea" rows={2} />
+              <Form.Control as="textarea" rows={2} name='description'/>
             </Form.Group>
             <InputGroup className="mb-3" >
               <Button variant="success">low</Button>
@@ -37,7 +78,7 @@ function AddTaskModal({closeModal}) {
           <Button variant="secondary" onClick={()=>closeModal(false)}>
             Close
           </Button>
-          <Button variant="primary" >
+          <Button variant="primary" type="submit" form="taskForm">
             Save Changes
           </Button>
         </Modal.Footer>
