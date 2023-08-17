@@ -7,7 +7,7 @@ function Header() {
 
   return (
     <div>
-      <div className='d-grid'>
+      <div className='d-grid mb-4'>
         <Button variant='primary' size='lg' onClick={()=>{setOpenModal(true)}}>Add Task</Button>
       </div>
       {openModal && <AddTaskModal closeModal={setOpenModal} />}
