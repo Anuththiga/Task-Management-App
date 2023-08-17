@@ -1,13 +1,22 @@
 import React from 'react'
-import '../styles/taskContainer.scss'
 import Header from './Header'
+import { Container, Row, Col } from 'react-bootstrap'
 
 function TaskContainer() {
   return (
-    <div className='container'>
-        <h1>Task Manager</h1>
-        <Header/>
-    </div>
+    <Container>
+      <Row>
+        <Col>
+          <h1>Task Manager</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <Header/>
+        </Col>
+      </Row>
+        
+    </Container>
   )
 }
 
