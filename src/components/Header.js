@@ -3,38 +3,39 @@ import React, { useState, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { FormGroup, InputGroup } from 'react-bootstrap';
 
 function Header() {
   const [openModal,setOpenModal] = useState(false);
   const [tasks,setTasks] = useState([]);
-  const [checked, setChecked] = useState(false);
+  const [urgency, setUrgency] = useState("low");
+  const [status, setStatus] = useState("Backlog");
+
 
   useEffect(()=>{
     setTasksToLocalStorage(tasks)
-  },[tasks])
-  
+  },[tasks]) 
 
   function handleSubmit(e) {
     e.preventDefault();
     
     let newTask = {
       title: e.target.title.value,
-      description: e.target.description.value
+      description: e.target.description.value,
+      urgency: urgency,
+      status: status
     };
 
-    
     let updatedTask = [...tasks, newTask];
     setTasks(updatedTask);   
-    console.log(tasks)
+
     setOpenModal(false);
     
   }
+
   function setTasksToLocalStorage(tasks) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }
  
-
   return (
     <div>
       <div className='d-grid mb-4'>
@@ -61,31 +62,26 @@ function Header() {
               <Form.Label>Description</Form.Label>
               <Form.Control as="textarea" rows={2} name='description'/>
             </Form.Group>
-            {/* <Form.Group> */}
+            <Form.Group className="mb-3" controlId='urgency'>
               <Form.Check 
                 type= "radio"
-                name= "low"
+                name= "urgency"
                 label= "low"
-                // checked= {checked}
-                btn btnColor='secondary'
+                onChange={(e) => setUrgency("low")}
               />
               <Form.Check 
                 type="radio"
-                name="medium"
+                name= "urgency"
                 label= "medium"
+                onChange={(e) => setUrgency("medium")}
               />
               <Form.Check 
                 type="radio"
-                name="high"
+                name= "urgency"
                 label= "high"
+                onChange={(e) => setUrgency("high")}
               />
-            {/* </Form.Group> */}
-            <InputGroup className="mb-3" >
-              <Button variant="success">low</Button>
-              <Button variant="primary">medium</Button>
-              <Button variant="danger">high</Button>
-            </InputGroup>
-
+            </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
