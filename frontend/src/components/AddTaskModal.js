@@ -4,7 +4,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { InputGroup } from 'react-bootstrap';
 
-
 function AddTaskModal({closeModal}) {
   const [tasks,setTasks] = useState([]);
   
@@ -12,11 +11,6 @@ function AddTaskModal({closeModal}) {
     setTasksToLocalStorage(tasks)
   },[tasks])
   
-
-  const toggleModal = () => {
-    closeModal(false);
-};
-
   function handleSubmit(e) {
     e.preventDefault();
     
@@ -25,27 +19,17 @@ function AddTaskModal({closeModal}) {
       description: e.target.description.value
     };
 
-    
-    // let updatedTask = [...tasks];
-    // updatedTask.push(newTask)
-    // setTasks(updatedTask)
-    // setTasksToLocalStorage(tasks)
-
     let updatedTask = [...tasks, newTask];
-    setTasks(updatedTask)   
+    setTasks(updatedTask);   
         
-    // toggleModal ();
+    closeModal(false);
     
   }
-
-  console.log(tasks)
 
   function setTasksToLocalStorage(tasks) {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }
   
- 
- 
   return (
     <Modal show={true} >
         <Modal.Header onClick={()=>closeModal(false)}  closeButton>
