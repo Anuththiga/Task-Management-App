@@ -4,9 +4,8 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function Header() {
+function Header({tasks, settasks}) {
   const [openModal,setOpenModal] = useState(false);
-  const [tasks,setTasks] = useState([]);
   const [urgency, setUrgency] = useState("low");
   const [status, setStatus] = useState("Backlog");
 
@@ -26,7 +25,7 @@ function Header() {
     };
 
     let updatedTask = [...tasks, newTask];
-    setTasks(updatedTask);   
+    settasks(updatedTask);   
 
     setOpenModal(false);
     
