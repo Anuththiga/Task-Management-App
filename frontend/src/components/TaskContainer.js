@@ -1,10 +1,23 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from './Header'
 import { Container, Row, Col } from 'react-bootstrap'
 import TaskStatus from './TaskStatus'
 
 function TaskContainer() {
-  // const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [taskList, setTasksList] = useState([]);
+
+  useEffect(()=> {
+    loadLocalStorageTasks();
+  },[tasks])
+ 
+  function loadLocalStorageTasks() {
+    let loadedTasks = localStorage.getItem("tasks");
+    let updatedTasks = JSON.parse(loadedTasks);
+    if(updatedTasks) {
+      setTasksList(updatedTasks)
+    }
+  }
 
   function deleteTask() {
     ///
@@ -24,13 +37,16 @@ function TaskContainer() {
       </Row>
       <Row>
         <Col>
-          <Header/>
+          <Header 
+            tasks={tasks}
+            settasks = {setTasks}
+            />
         </Col>
       </Row>
       <Row className='border'>
         <Col>
           <TaskStatus 
-            // tasks={tasks}
+            tasks={taskList}
             deleteTask={deleteTask}
             moveTask={moveTask}
             status="Backlog"
@@ -38,7 +54,7 @@ function TaskContainer() {
         </Col>
         <Col>
           <TaskStatus
-            // tasks={tasks}
+            tasks={taskList}
             deleteTask={deleteTask}
             moveTask={moveTask}
             status="In Progress"
@@ -46,7 +62,7 @@ function TaskContainer() {
         </Col>
         <Col>
           <TaskStatus
-            // tasks={tasks}
+            tasks={taskList}
             deleteTask={deleteTask}
             moveTask={moveTask}
             status="Done"
