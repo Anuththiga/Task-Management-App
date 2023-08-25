@@ -1,18 +1,25 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Row, Col } from 'react-bootstrap'
 
-function Task({}) {
+function Task({ task }) {
+  
   function handleMoveRight() {
     ///
-    
+
   }
 
   return (
-    <div>
+    <Row className='mt-4 mb-2'>
+      <Col>
         <Button variant="info" size='sm'>&#171;</Button>
-        Task
+      </Col>
+      <Col xs={6}>
+        {task.title}
+      </Col>
+      <Col>
         <Button variant="info" size='sm' onClick={handleMoveRight}>&#187;</Button>
-    </div>
+      </Col>
+    </Row>
   )
 }
 
